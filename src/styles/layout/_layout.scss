@@ -1,0 +1,41 @@
+@include border-box-sizing; 
+
+$global-keywords: (
+  container            : 1000px,
+  math                 : fluid,
+  columns:                24,
+  gutters:                1,
+  output               : float,
+  container-position   : center,
+  flow                 : ltr,
+  gutter-position      : after,
+);
+ 
+.wrapper{ 
+   @include container(1000px);
+   @include layout($global-keywords);
+   border: 4px solid green;
+}  
+[class*="col-"]{
+  min-height: 300px;
+}
+.col-4{
+  @include span(4);
+  background: red;
+}
+.col-16{
+   @include span(16);
+}
+.col-8{
+  @include span(8 of 16);
+  background: orange;
+}
+.last{
+  @include last;
+}
+
+
+
+ 
+
+
