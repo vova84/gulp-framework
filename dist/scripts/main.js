@@ -1,4 +1,9 @@
-
+var hideElement = require('./hide');
+hideElement('#some-id');
+module.exports = function(selector) {
+    console.log('test1');
+};
+!function r(e,n,o){function t(u,f){if(!n[u]){if(!e[u]){var c="function"==typeof require&&require;if(!f&&c)return c(u,!0);if(i)return i(u,!0);var a=new Error("Cannot find module '"+u+"'");throw a.code="MODULE_NOT_FOUND",a}var s=n[u]={exports:{}};e[u][0].call(s.exports,function(r){var n=e[u][1][r];return t(n?n:r)},s,s.exports,r,e,n,o)}return n[u].exports}for(var i="function"==typeof require&&require,u=0;u<o.length;u++)t(o[u]);return t}({1:[function(r){var e=r("./hide");e("#some-id")},{"./hide":2}],2:[function(r,e){e.exports=function(){console.log("test")}},{}]},{},[1]);
 /* Modernizr 2.8.3 (Custom Build) | MIT & BSD
  * Build: http://modernizr.com/download/#-backgroundsize-flexbox-flexboxlegacy-cssanimations-csstransforms-csstransforms3d-csstransitions-inlinesvg-svg-shiv-cssclasses-teststyles-testprop-testallprops-prefixes-domprefixes-load
  */

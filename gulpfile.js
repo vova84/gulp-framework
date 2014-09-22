@@ -15,10 +15,25 @@ var gulp = require('gulp'),
     embedlr = require("gulp-embedlr"),
     cache = require('gulp-cache'),
     uncss = require('gulp-uncss'),
+    browserify = require('browserify'),
+    source = require('vinyl-source-stream'),
+    buffer = require('vinyl-buffer'),
     processhtml = require('gulp-processhtml'),
     livereload = require('gulp-livereload'),
     lr = require('tiny-lr'),
     server = lr();
+
+gulp.task('browserify', function() {
+    return browserify('./src/scripts/app.js')
+        .bundle()
+        .pipe(source('main.js'))
+        .pipe(buffer())
+        .pipe(gulp.dest('./src/scripts/'))
+        .pipe(rename({ suffix: '.min' }))
+        .pipe(uglify())
+        .pipe(livereload(server))
+        .pipe(gulp.dest('./dist/scripts/'));
+});
 
 // Styles
 gulp.task('styles', function() {
@@ -76,7 +91,7 @@ gulp.task('html', function() {
     .pipe(gulp.dest("dist/"))
     .pipe(livereload(server));
 })
-    
+
 // Clean
 gulp.task('clean', function() {
   return gulp.src(['dist/styles', 'dist/scripts', 'dist/images'], {read: false})
@@ -85,7 +100,8 @@ gulp.task('clean', function() {
 
 
 // Default task
-gulp.task('default', ['watch', 'styles', 'scripts', 'images', 'uncss', 'processHTML']);
+//add 'scripts task anr remove browserify if we do not use browserify'
+gulp.task('default', ['watch', 'styles', 'images', 'uncss', 'processHTML', 'browserify']);
 
 // Watch
 gulp.task('watch', function() {
@@ -100,8 +116,11 @@ gulp.task('watch', function() {
     // Watch .scss files
     gulp.watch('src/styles/**/*.scss', ['styles']);
 
+    // !!! if we use browserify we need to comment uglify scripts!!!!
     // Watch .js files
-    gulp.watch('src/scripts/**/*.js', ['scripts']);
+    //gulp.watch('src/scripts/**/*.js', ['scripts']);
+
+    gulp.watch('src/scripts/**/*.js', ['browserify']);
 
     // Watch image files
     gulp.watch('src/images/*', ['images']);
